@@ -6,7 +6,7 @@ const ItemsInput = () => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const url =
-    "https://alchimistes.fr/accueil/2749-trucker-sweat-shirt-pique-col-zippe-homme-k206.html";
+    "http://alchimistes.fr/accueil/2749-trucker-sweat-shirt-pique-col-zippe-homme-k206.html";
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
