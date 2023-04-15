@@ -6,12 +6,43 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
-model Example {
+model Devis {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    items     Item[]
+    price     Float
+    customer  String
+
+    @@index([authorId], name: "authorId")
+}
+
+model User {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    email     String   @unique
+    name      String?
+    devis     Devis[]
+}
+
+model Item {
+    id            String   @id @default(cuid())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    reference     String
+    name          String
+    price         Float
+    devis         Devis    @relation(fields: [devisId], references: [id])
+    devisId       String
+    customization String
+
+    @@index([devisId], name: "devisId")
 }
