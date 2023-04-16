@@ -12,34 +12,41 @@ datasource db {
 }
 
 model Devis {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    author    User     @relation(fields: [authorId], references: [id])
+    id        String    @id @unique
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    author    User      @relation(fields: [authorId], references: [id])
     authorId  String
+    color     String
     items     Item[]
     price     Float
     customer  String
+    deadline  DateTime? @default(now())
+    status    String
+    margin    Float
 
     @@index([authorId], name: "authorId")
 }
 
 model User {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    email     String   @unique
-    name      String?
-    devis     Devis[]
+    id    String  @id @default(cuid())
+    email String  @unique
+    name  String?
+    devis Devis[]
 }
 
 model Item {
     id            String   @id @default(cuid())
     createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+    updatedAt     DateTime @default(now()) @updatedAt
     reference     String
     name          String
     price         Float
+    url           String
+    size          String
+    color         String
+    quantity      Int
+    supplierPrice Float
     devis         Devis    @relation(fields: [devisId], references: [id])
     devisId       String
     customization String

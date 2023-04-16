@@ -3,26 +3,29 @@ import Image from "next/image";
 import { poppins } from "@/utils/fonts";
 import { useUser } from "@clerk/nextjs";
 import * as Avatar from "@radix-ui/react-avatar";
+import Link from "next/link";
 
 const Navbar: FC = () => {
   const { user, isLoaded } = useUser();
   return (
-    <nav className="flex h-20 w-screen flex-row items-center justify-between bg-white/10 px-40 text-black border-b border-gray-300">
+    <nav className="flex h-20 w-screen flex-row items-center justify-between border-b border-gray-300 bg-white/10 px-40 text-black">
       <div className="flex flex-row gap-20">
-        <div
-          className={
-            poppins.className +
-            " flex flex-row items-center gap-4 text-2xl font-bold capitalize tracking-widest"
-          }
-        >
-          <Image
-            src="/assets/logos/logo-black.png"
-            alt="Logo"
-            width={40}
-            height={40}
-          />
-          INS&apos;WEAR
-        </div>
+        <Link href="/" passHref>
+          <div
+            className={
+              poppins.className +
+              " flex flex-row items-center gap-4 text-2xl font-bold capitalize tracking-widest"
+            }
+          >
+            <Image
+              src="/assets/logos/logo-black.png"
+              alt="Logo"
+              width={40}
+              height={40}
+            />
+            INS&apos;WEAR
+          </div>
+        </Link>
 
         <div className="flex flex-row items-center gap-10">
           <div>Devis</div>

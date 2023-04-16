@@ -1,42 +1,118 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Item } from "@/utils/types";
+import * as Label from "@radix-ui/react-label";
+import { type FC, useState, type Dispatch, type SetStateAction } from "react";
+import { FaPlus } from "react-icons/fa";
+import ItemModal from "./ItemModal";
 
-const ItemsInput = () => {
-  const [items, setItems] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
+type ItemsInputProps = {
+  margin: number;
+  items: Item[];
+  setItems: Dispatch<SetStateAction<Item[]>>;
+  triggerRender: () => void;
+};
 
-  const url =
-    "http://alchimistes.fr/accueil/2749-trucker-sweat-shirt-pique-col-zippe-homme-k206.html";
+const ItemsInput: FC<ItemsInputProps> = ({
+  margin,
+  items,
+  setItems,
+  triggerRender,
+}) => {
+  const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
+  const [currentItem, setCurrentItem] = useState<Item>();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const selectItem = (item: Item) => {
+    setCurrentItem(item);
+    setIsItemModalOpen(true);
   };
-
-  const handleAddItem = () => {
-    setItems([...items, inputValue]);
-    setInputValue("");
-  };
-
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   return (
-    <div>
-      <input type="text" value={inputValue} onChange={handleInputChange} />
-      <button onClick={handleAddItem}>Add Item</button>
-      <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+    <>
+      <div className="flex flex-col gap-2">
+        <Label.Root className="text-[13px] font-semibold" htmlFor="items">
+          Items
+        </Label.Root>
+        <div className="flex flex-col gap-1">
+          <div
+            className="flex cursor-pointer flex-row items-center justify-between rounded-md border border-gray-200 bg-black p-4 text-white duration-200 ease-in-out hover:bg-gray-700"
+            onClick={() => {
+              setCurrentItem(undefined);
+              setIsItemModalOpen(true);
+            }}
+          >
+            <div className="flex flex-row items-center gap-2 text-sm font-semibold">
+              <FaPlus /> Ajouter un item
+            </div>
+          </div>
+          {items.map((item, index) => (
+            <Item key={index} item={item} onClick={() => selectItem(item)} />
+          ))}
+        </div>
+      </div>
+      <ItemModal
+        item={currentItem}
+        onClose={() => setIsItemModalOpen(false)}
+        isOpen={isItemModalOpen}
+        margin={margin}
+        onSave={(item) => {
+          if (currentItem) {
+            const newItems = items;
+            newItems[
+              items.findIndex((i) =>
+                Object.entries(currentItem).every(
+                  ([key, val]) => i[key as keyof Item] === val
+                )
+              )
+            ] = item;
+            setItems(newItems);
+          } else {
+            setItems((prev) => [...prev, item]);
+          }
+          triggerRender();
+        }}
+        onDelete={() => {
+          if (currentItem) {
+            setItems((prev) => {
+              const newItems = prev;
+              newItems.splice(items.indexOf(currentItem), 1);
+              return newItems;
+            });
+          }
+          triggerRender();
+
+          setIsItemModalOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
+const Separator = () => {
+  return <p className="text-gray-200">|</p>;
+};
+
+type ItemProps = {
+  item: Item;
+  onClick: () => void;
+};
+
+const Item: FC<ItemProps> = ({ onClick, item }) => {
+  return (
+    <div
+      className="flex cursor-pointer flex-row items-center justify-between rounded-md border border-gray-200 p-4 px-2 duration-200 ease-in-out hover:border-black"
+      onClick={onClick}
+    >
+      <div className="flex flex-row items-center justify-items-center gap-2">
+        <p className="text-center text-sm font-bold text-black">{item.name}</p>
+        <Separator />
+        <p className="text-center text-sm font-light">{item.color}</p>
+        <Separator />
+        <p className="text-lg">{item.size}</p>
+      </div>
+      <div className="flex flex-row items-baseline gap-2">
+        <p className="text-sm font-bold italic text-black/70">
+          x{item.quantity}
+        </p>
+      </div>
     </div>
   );
 };

@@ -5,7 +5,9 @@ import Head from "next/head";
 import { useState } from "react";
 
 const Home: NextPage = () => {
-  const [pageStatus, setPageStatus] = useState<"main" | "create">("main");
+  const [pageStatus, setPageStatus] = useState<"main" | "create" | "view">(
+    "main"
+  );
   return (
     <>
       <Head>
