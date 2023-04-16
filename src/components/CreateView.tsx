@@ -13,19 +13,7 @@ type CreateViewProps = {
 const CreateView: FC<CreateViewProps> = ({ closeView }) => {
   const { user } = useUser();
   const [, setTriggerRender] = useState<boolean>(false);
-  const [items, setItems] = useState<Item[]>([
-    {
-      url: "https://alchimistes.fr/sweats-capuche/2369-sweatshirt-college-hoodie-jh001.html",
-      reference: "JH001",
-      quantity: 1,
-      name: "Sweat à capuche",
-      size: "L",
-      color: "Deep Black",
-      price: 10,
-      supplierPrice: "5.00",
-      customizations: [],
-    },
-  ]);
+  const [items, setItems] = useState<Item[]>([]);
   const [customer, setCustomer] = useState<string>("");
 
   return (
@@ -53,7 +41,7 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
                 /
               </span>
             </li>
-            <li className="text-black flex cursor-pointer items-center font-sans text-sm font-normal leading-normal antialiased transition-colors duration-300 hover:text-gray-500">
+            <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-black antialiased transition-colors duration-300 hover:text-gray-500">
               Créer
             </li>
           </ol>
@@ -74,7 +62,11 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
           />
         </div>
         <div className="flex h-full w-full flex-col bg-blue-500">
-          <PDFVisualizer items={items} author={user?.fullName} customer={customer} />
+          <PDFVisualizer
+            items={items}
+            author={user?.fullName}
+            customer={customer}
+          />
         </div>
       </div>
     </div>
