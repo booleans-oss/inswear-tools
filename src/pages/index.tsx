@@ -135,7 +135,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
               <div>Loading...</div>
             ) : (
               validatedDevis.map((devis) => (
-                <Link href={`/devis/${devis.id}`} key={devis.id} passHref>
+                <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
                   <div
                     key={devis.id}
                     className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
@@ -203,7 +203,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
               <div>Loading...</div>
             ) : (
               refusedDevis.map((devis) => (
-                <Link href={`/devis/${devis.id}`} key={devis.id} passHref>
+                <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
                   <div
                     key={devis.id}
                     className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
