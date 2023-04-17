@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { BsBoxSeam, BsCurrencyDollar } from "react-icons/bs";
+import { AiFillQuestionCircle } from "react-icons/ai";
+import { MdComputer } from "react-icons/md";
 
 const Navbar: FC = () => {
   const { user, isLoaded } = useUser();
@@ -30,11 +32,15 @@ const Navbar: FC = () => {
         </Link>
 
         <div className="flex flex-row items-center gap-10">
-          <Link href="/comment-faire">Comment faire?</Link>
+          <Link className="flex items-center gap-2 hover:border-b hover:border-gray-200 px-2 py-1" href="/comment-faire">
+            <AiFillQuestionCircle className="h-5 w-5" />
+            Comment faire?
+          </Link>
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button>
               {({ open }) => (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 hover:border-b hover:border-gray-200 px-2 py-1">
+                  <MdComputer className="h-5 w-5" />
                   Devis {open ? <BsChevronUp /> : <BsChevronDown />}
                 </div>
               )}
