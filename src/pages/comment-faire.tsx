@@ -28,7 +28,7 @@ export default function CommentFairePage() {
           </ol>
         </nav>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 pb-10">
         <h1 className="text-5xl font-bold">Comment faire ?</h1>
         <p>
           Quand quelqu&apos;un passe une commande vous devez suivre les étapes
@@ -96,26 +96,104 @@ export default function CommentFairePage() {
             </p>
           </div>
         </div>
+        <hr className="my-10" />
         <div className="flex items-start gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
             3
           </div>
           <div className="flex w-3/4 flex-col gap-2 whitespace-pre-wrap break-words">
             <p>
-              Une fois l&apos;email généré vous n&apos;avez qu&apos;à l&apos;envoyer à notre fournisseur en cliquant sur le bouton <span className="font-bold">Envoyer.</span>.
+              Une fois l&apos;email généré vous n&apos;avez qu&apos;à
+              l&apos;envoyer à notre fournisseur en cliquant sur le bouton{" "}
+              <span className="font-bold">Envoyer</span>.
             </p>
             <p>
-              Vous avez juste à remplir les informations que vous avez déjà.
+              Vous devez aussi changer le status de la commande en cliquant sur
+              le bouton <span className="font-bold">Envoyé</span>.
+            </p>
+          </div>
+        </div>
+        <hr className="my-10" />
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
+            4
+          </div>
+          <div className="flex w-3/4 flex-col gap-2 whitespace-pre-wrap break-words">
+            <p>
+              Quand vous avez une réponse du fournisseur, vous pouvez maintenant
+              créer le devis pour les clients.
             </p>
             <p>
-              Cependant, vous devez connaitre le lien de l&apos;article demandé.
-              Pour cela vous n&apos;avez qu&apos;à aller sur le site des
-              Alchimistes (
-              <a className="underline" href="https://alchimistes.fr/">
-                https://alchimistes.fr/
-              </a>
-              ) et cherchez le produit qui correspond au mieux aux attentes de
-              nos clients.
+              Pour cela, vous devez vous rediriger vers{" "}
+              <Link className="underline" href="/devis/client" passHref>
+                https://inswear-tools.vercel.app/client
+              </Link>
+              .
+            </p>
+            <p>
+              Comme pour le devis pour le fournisseur, vous devez remplir les
+              informations que vous connaissez et que le fournisseur a confirmé
+              avec son devis qu&apos;il vous a fourni.
+            </p>
+            <p>
+              Cependant, vous devez maintenant inclure le{" "}
+              <strong>prix unitaire</strong> de l&apos;article. Celui-ci se
+              trouve dans le devis envoyé par le fournisseur.
+            </p>
+            <p>
+              Vous pouvez aussi modifier la marge que l&apos;on peut faire sur
+              la commande. Par défaut, notre marge est de <strong>6,5%</strong>.
+            </p>
+          </div>
+        </div>
+        <hr className="my-10" />
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
+            5
+          </div>
+          <div className="flex w-3/4 flex-col gap-2 whitespace-pre-wrap break-words">
+            <p>
+              Une fois le devis généré, vous n&apos;avez qu&apos;à
+              l&apos;envoyer au client qui a passé la commande.
+            </p>
+            <p>
+              N&apos;oubliez pas de changer le status de la commande en cliquant
+              sur le bouton <span className="font-bold">Envoyé</span>.
+            </p>
+            <p>
+              Pour cela, vous devez vous rediriger vers{" "}
+              <Link className="underline" href="/devis/client" passHref>
+                https://inswear-tools.vercel.app/client
+              </Link>
+              .
+            </p>
+            <p>
+              Comme pour le devis pour le fournisseur, vous devez remplir les
+              informations que vous connaissez et que le fournisseur a confirmé
+              avec son devis qu&apos;il vous a fourni.
+            </p>
+            <p>
+              Cependant, vous devez maintenant inclure le{" "}
+              <strong>prix unitaire</strong> de l&apos;article. Celui-ci se
+              trouve dans le devis envoyé par le fournisseur.
+            </p>
+            <p>
+              Vous pouvez aussi modifier la marge que l&apos;on peut faire sur
+              la commande. Par défaut, notre marge est de <strong>6,5%</strong>.
+            </p>
+          </div>
+        </div>
+        <hr className="my-10" />
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-lg font-bold text-white">
+            6
+          </div>
+          <div className="flex w-3/4 flex-col gap-2 whitespace-pre-wrap break-words">
+            <p>
+              Lorsque vous avez une réponse du client, vous pouvez modifier le
+              status en fonction de leur réponse:{" "}
+              <span className="font-bold">Accepté</span> ou{" "}
+              <span className="font-bold">Refusé</span>.
             </p>
           </div>
         </div>
