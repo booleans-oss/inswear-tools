@@ -7,7 +7,7 @@ import type {
 import * as Popover from "@radix-ui/react-popover";
 import { type FC, useState, forwardRef } from "react";
 import { FaPlus } from "react-icons/fa";
-import ListBox from "./ListBox";
+import ListBox from "../primitives/ListBox";
 import { BsTrash3 } from "react-icons/bs";
 
 type CustomizationsGridProps = {

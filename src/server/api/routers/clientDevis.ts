@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import { DevisSchema } from "@/schemas/Devis";
 import { UserSchema } from "@/schemas/User";
 
-export const devisRouter = createTRPCRouter({
+export const clientDevisRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
@@ -14,7 +14,7 @@ export const devisRouter = createTRPCRouter({
       };
     }),
   getActiveOnes: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.devis.findMany({
+    return ctx.prisma.clientDevis.findMany({
       where: {
         OR: [
           {
@@ -32,7 +32,7 @@ export const devisRouter = createTRPCRouter({
     });
   }),
   getValidatedOnes: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.devis.findMany({
+    return ctx.prisma.clientDevis.findMany({
       where: {
         status: "accepté",
       },
@@ -43,7 +43,7 @@ export const devisRouter = createTRPCRouter({
     });
   }),
   getRefusedOnes: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.devis.findMany({
+    return ctx.prisma.clientDevis.findMany({
       where: {
         status: "refusé",
       },
@@ -56,7 +56,7 @@ export const devisRouter = createTRPCRouter({
   findOne: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.devis.findUnique({
+      return ctx.prisma.clientDevis.findUnique({
         where: {
           id: input.id,
         },
@@ -82,7 +82,7 @@ export const devisRouter = createTRPCRouter({
           },
         });
       }
-      return ctx.prisma.devis.create({
+      return ctx.prisma.clientDevis.create({
         data: {
           id: faker.random.numeric(5),
           customer: input.customer,
@@ -118,7 +118,7 @@ export const devisRouter = createTRPCRouter({
   updateStatus: publicProcedure
     .input(z.object({ id: z.string(), status: z.string() }))
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.devis.update({
+      return ctx.prisma.clientDevis.update({
         where: {
           id: input.id,
         },

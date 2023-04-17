@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "@/server/api/trpc";
-import { devisRouter } from "@/server/api/routers/devis";
+import { clientDevisRouter } from "@/server/api/routers/clientDevis";
+import { fournisseurDevisRouter } from "./routers/fournisseurDevis";
 
 /**
  * This is the primary router for your server.
@@ -7,7 +8,8 @@ import { devisRouter } from "@/server/api/routers/devis";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  devis: devisRouter,
+  clientDevis: clientDevisRouter,
+  fournisseurDevis: fournisseurDevisRouter,
 });
 
 // export type definition of API

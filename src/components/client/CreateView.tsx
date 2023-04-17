@@ -41,6 +41,18 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
                 /
               </span>
             </li>
+            <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
+              Devis
+              <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
+                /
+              </span>
+            </li>
+            <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
+              Client
+              <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
+                /
+              </span>
+            </li>
             <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-black antialiased transition-colors duration-300 hover:text-gray-500">
               Créer
             </li>
@@ -61,7 +73,7 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
             triggerRender={() => setTriggerRender((prev) => !prev)}
           />
         </div>
-        <div className="flex h-full w-full flex-col bg-blue-500">
+        <div className="-mt-20 flex h-full w-full flex-col bg-blue-500">
           <PDFVisualizer
             items={items}
             author={user?.fullName}

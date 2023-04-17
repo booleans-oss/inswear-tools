@@ -31,26 +31,28 @@ const StatusBadge = ({ status }: { status: Status }) => {
 
 const MainView: FC<MainViewProps> = ({ createDevis }) => {
   const { data: activeDevis, isLoading: areActiveDevisLoading } =
-    api.devis.getActiveOnes.useQuery();
+    api.clientDevis.getActiveOnes.useQuery();
   const { data: validatedDevis, isLoading: areValidatedDevisLoading } =
-    api.devis.getValidatedOnes.useQuery();
+    api.clientDevis.getValidatedOnes.useQuery();
   const { data: refusedDevis, isLoading: areRefusedDevisLoading } =
-    api.devis.getRefusedOnes.useQuery();
+    api.clientDevis.getRefusedOnes.useQuery();
   return (
     <div className="flex flex-col gap-10">
       <h1 className={inter.className + " text-3xl font-medium text-black/80"}>
         Devis actifs
       </h1>
       <div className="flex flex-row flex-wrap gap-8">
-        <div
-          className="flex h-[364px] w-[292px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-gray-300 bg-transparent"
-          onClick={createDevis}
-        >
-          <div className="rounded-full border-2 border-gray-200 p-2">
-            <FaPlus />
+        <Link href="/devis/client" passHref>
+          <div
+            className="flex h-[364px] w-[292px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-gray-300 bg-transparent"
+            onClick={createDevis}
+          >
+            <div className="rounded-full border-2 border-gray-200 p-2">
+              <FaPlus />
+            </div>
+            <div className="text-md font-bold">Créer un devis</div>
           </div>
-          <div className="text-md font-bold">Créer un devis</div>
-        </div>
+        </Link>
         {areActiveDevisLoading || !activeDevis ? (
           <div>Loading...</div>
         ) : (

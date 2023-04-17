@@ -1,6 +1,6 @@
 export type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
 
-export type Status = "généré" | "envoyé" | "accepté" | "refusé"
+export type Status = "généré" | "envoyé" | "accepté" | "refusé";
 
 export type Item = {
   url: string;
@@ -13,6 +13,8 @@ export type Item = {
   customizations: Customization[];
   size: Size;
 };
+
+export type FournisseurItem = Omit<Item, "price" | "supplierPrice">;
 
 export type CustomizationPlace =
   | "torse"

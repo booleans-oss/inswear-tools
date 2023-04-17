@@ -1,20 +1,26 @@
-import ListBox from "@/components/ListBox";
-import PDFVisualizer, { PDFDocument } from "@/components/PDFVisualizer";
+import ListBox from "@/components/primitives/ListBox";
 import { api } from "@/utils/api";
-import type { Customization, Item, Size, Status } from "@/utils/types";
+import type {
+  Customization,
+  FournisseurItem,
+  Size,
+  Status,
+} from "@/utils/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { type FC, useState, useEffect } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import MailVisualizer from "@/components/fournisseur/MailVisualizer";
 
 const DevisView: FC = () => {
   const router = useRouter();
 
-  const { mutateAsync } = api.devis.updateStatus.useMutation();
+  const { mutateAsync } = api.clientDevis.updateStatus.useMutation();
 
   const { id } = router.query;
 
-  const { data, isLoading } = api.devis.findOne.useQuery({ id: id as string });
+  const { data, isLoading } = api.fournisseurDevis.findOne.useQuery({
+    id: id as string,
+  });
 
   const [status, setStatus] = useState<Status>(
     (data?.status as Status) ?? "généré"
@@ -30,10 +36,9 @@ const DevisView: FC = () => {
     }
   };
 
-  const items = data?.items.map<Item>((item) => ({
+  const items = data?.items.map<FournisseurItem>((item) => ({
     ...item,
     size: item.size as Size,
-    supplierPrice: String(item.supplierPrice),
     customizations: JSON.parse(item.customization) as Customization[],
   }));
 
@@ -69,6 +74,12 @@ const DevisView: FC = () => {
                   /
                 </span>
               </li>
+              <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
+                Fournisseur
+                <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
+                  /
+                </span>
+              </li>
               <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-black antialiased transition-colors duration-300 hover:text-gray-500">
                 #{id}
               </li>
@@ -96,35 +107,11 @@ const DevisView: FC = () => {
               <h1 className="text-center text-3xl font-bold uppercase">
                 Devis #{id}
               </h1>
-              <PDFDownloadLink
-                document={
-                  <PDFDocument
-                    items={items ?? []}
-                    author={data.author.name}
-                    id={data.id}
-                    customer={data.customer}
-                  />
-                }
-                fileName={`devis-${data.id}-${data.customer}.pdf`}
-              >
-                {({ loading }) =>
-                  loading ? (
-                    "Loading document..."
-                  ) : (
-                    <button className="rounded border bg-black px-4 py-2 text-sm font-bold uppercase text-white duration-150 ease-in-out hover:border-black hover:bg-white hover:text-black">
-                      Download
-                    </button>
-                  )
-                }
-              </PDFDownloadLink>
+              <a href="mailto:contact@inswear.fr" className="rounded border bg-black px-4 py-2 text-sm font-bold uppercase text-white duration-150 ease-in-out hover:border-black hover:bg-white hover:text-black">
+                Envoyer
+              </a>
             </div>
-            <PDFVisualizer
-              items={items ?? []}
-              author={data.author.name}
-              id={data.id}
-              customer={data.customer}
-              createdAt={data.createdAt}
-            />
+            <MailVisualizer items={items ?? []} />
           </>
         )}
       </div>

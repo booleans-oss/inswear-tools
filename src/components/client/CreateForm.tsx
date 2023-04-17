@@ -7,10 +7,10 @@ import {
   useEffect,
 } from "react";
 import { useForm } from "react-hook-form";
-import TextInput from "./TextInput";
+import TextInput from "../form/TextInput";
 import { format } from "date-fns";
 import ItemsInput from "./ItemsInput";
-import MarginInput from "./MarginInput";
+import MarginInput from "../form/MarginInput";
 import type { Item } from "@/utils/types";
 import { type Devis, DevisSchema } from "@/schemas/Devis";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,7 +39,6 @@ const CreateForm: FC<CreateFormProps> = ({
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
   } = useForm<Devis>({
     mode: "onChange",
     resolver: zodResolver(DevisSchema),
@@ -49,7 +48,7 @@ const CreateForm: FC<CreateFormProps> = ({
     },
   });
 
-  const { mutateAsync } = api.devis.create.useMutation();
+  const { mutateAsync } = api.clientDevis.create.useMutation();
 
   useEffect(() => {
     if (items) {
@@ -96,7 +95,7 @@ const CreateForm: FC<CreateFormProps> = ({
         email: user.primaryEmailAddress?.emailAddress ?? "",
         name: user.fullName ?? "",
       });
-      await router.push(`/devis/${devis.id}`);
+      await router.push(`/devis/client/${devis.id}`);
     } catch (e) {
       console.log(e);
     }

@@ -1,15 +1,15 @@
 import type { Item, Size } from "@/utils/types";
 import { Dialog, Transition } from "@headlessui/react";
 import { type FC, Fragment, useMemo, useEffect } from "react";
-import TextInput from "./TextInput";
+import TextInput from "../form/TextInput";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { capitalize } from "@/utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import NumberInput from "./NumberInput";
+import NumberInput from "../form/NumberInput";
 import * as Label from "@radix-ui/react-label";
-import CustomizationsGrid from "./CustomizationsGrid";
+import CustomizationsGrid from "../form/CustomizationsGrid";
 import { ItemSchema } from "@/schemas/Item";
-import SizeRadio from "./SizeRadio";
+import SizeRadio from "../form/SizeRadio";
 
 type ItemModalProps = {
   item: Item | undefined;
@@ -70,6 +70,7 @@ const ItemModal: FC<ItemModalProps> = ({
       customizations: item?.customizations ?? [],
     },
   });
+  console.log(errors);
   useEffect(() => {
     if (item) {
       setValue("url", item.url);
@@ -236,11 +237,6 @@ const ItemModal: FC<ItemModalProps> = ({
                           value={finalPrice.toString()}
                           disabled
                           {...register("price")}
-                          onChange={(e) => {
-                            if (isNaN(parseInt(e.target.value)))
-                              setValue("price", 0);
-                            else setValue("price", parseInt(e.target.value));
-                          }}
                         />
                       </div>
                       <hr className="my-5" />
