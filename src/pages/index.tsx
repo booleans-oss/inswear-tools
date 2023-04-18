@@ -8,6 +8,7 @@ import { fr } from "date-fns/locale";
 import type { Status } from "@/utils/types";
 import { capitalize } from "@/utils/utils";
 import Head from "next/head";
+import LoadingState from "@/components/primitives/LoadingState";
 
 type MainViewProps = {
   createDevis: () => void;
@@ -63,66 +64,70 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                 <div className="text-md font-bold">Créer un devis</div>
               </div>
             </Link>
-            {areActiveDevisLoading || !activeDevis ? (
-              <div>Loading...</div>
-            ) : (
-              activeDevis.map((devis) => (
-                <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
-                  <div
+            {areActiveDevisLoading || !activeDevis
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <LoadingState key={Number("1" + String(i))} />
+                ))
+              : activeDevis.map((devis) => (
+                  <Link
+                    href={`/devis/client/${devis.id}`}
                     key={devis.id}
-                    className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
+                    passHref
                   >
                     <div
-                      className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
-                      style={{
-                        backgroundColor: devis.color,
-                      }}
+                      key={devis.id}
+                      className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
                     >
-                      {devis.customer}
+                      <div
+                        className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
+                        style={{
+                          backgroundColor: devis.color,
+                        }}
+                      >
+                        {devis.customer}
+                      </div>
+                      <div className="flex flex-col gap-2 px-6 py-4 text-sm">
+                        <div>
+                          <p className="font-semibold">{devis.customer}</p>
+                          <p className="font-semibold text-black/70">
+                            #{devis.id}
+                          </p>
+                        </div>
+                        <div className="text-[13px]">
+                          <p className="font-light text-gray-500">
+                            Dernière mise à jour{" "}
+                            {formatDistanceToNow(new Date(devis.updatedAt), {
+                              addSuffix: true,
+                              locale: fr,
+                            })}
+                          </p>
+                          <p className="font-light text-black">
+                            Créé par {devis.author.name}
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            {devis.items.length} item
+                            {devis.items.length > 1 ? "s" : ""}{" "}
+                            <span className="text-gray-500">|</span>{" "}
+                            {devis.items
+                              .reduce(
+                                (acc, item) => acc + item.price * item.quantity,
+                                0
+                              )
+                              .toFixed(2)}
+                            €
+                          </p>
+                        </div>
+                        <div className="mt-4">
+                          <StatusBadge
+                            status={devis.status.toLowerCase() as Status}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-2 px-6 py-4 text-sm">
-                      <div>
-                        <p className="font-semibold">{devis.customer}</p>
-                        <p className="font-semibold text-black/70">
-                          #{devis.id}
-                        </p>
-                      </div>
-                      <div className="text-[13px]">
-                        <p className="font-light text-gray-500">
-                          Dernière mise à jour{" "}
-                          {formatDistanceToNow(new Date(devis.updatedAt), {
-                            addSuffix: true,
-                            locale: fr,
-                          })}
-                        </p>
-                        <p className="font-light text-black">
-                          Créé par {devis.author.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          {devis.items.length} item
-                          {devis.items.length > 1 ? "s" : ""}{" "}
-                          <span className="text-gray-500">|</span>{" "}
-                          {devis.items
-                            .reduce(
-                              (acc, item) => acc + item.price * item.quantity,
-                              0
-                            )
-                            .toFixed(2)}
-                          €
-                        </p>
-                      </div>
-                      <div className="mt-4">
-                        <StatusBadge
-                          status={devis.status.toLowerCase() as Status}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            )}
+                  </Link>
+                ))}
           </div>
           <hr />
           <h1
@@ -131,66 +136,70 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
             Devis acceptés
           </h1>
           <div className="flex flex-row flex-wrap gap-8">
-            {areValidatedDevisLoading || !validatedDevis ? (
-              <div>Loading...</div>
-            ) : (
-              validatedDevis.map((devis) => (
-                <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
-                  <div
+            {areValidatedDevisLoading || !validatedDevis
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <LoadingState key={Number("2" + String(i))} />
+                ))
+              : validatedDevis.map((devis) => (
+                  <Link
+                    href={`/devis/client/${devis.id}`}
                     key={devis.id}
-                    className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
+                    passHref
                   >
                     <div
-                      className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
-                      style={{
-                        backgroundColor: devis.color,
-                      }}
+                      key={devis.id}
+                      className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
                     >
-                      {devis.customer}
+                      <div
+                        className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
+                        style={{
+                          backgroundColor: devis.color,
+                        }}
+                      >
+                        {devis.customer}
+                      </div>
+                      <div className="flex flex-col gap-2 px-6 py-4 text-sm">
+                        <div>
+                          <p className="font-semibold">{devis.customer}</p>
+                          <p className="font-semibold text-black/70">
+                            #{devis.id}
+                          </p>
+                        </div>
+                        <div className="text-[13px]">
+                          <p className="font-light text-gray-500">
+                            Dernière mise à jour{" "}
+                            {formatDistanceToNow(new Date(devis.updatedAt), {
+                              addSuffix: true,
+                              locale: fr,
+                            })}
+                          </p>
+                          <p className="font-light text-black">
+                            Créé par {devis.author.name}
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            {devis.items.length} item
+                            {devis.items.length > 1 ? "s" : ""}{" "}
+                            <span className="text-gray-500">|</span>{" "}
+                            {devis.items
+                              .reduce(
+                                (acc, item) => acc + item.price * item.quantity,
+                                0
+                              )
+                              .toFixed(2)}
+                            €
+                          </p>
+                        </div>
+                        <div className="mt-4">
+                          <StatusBadge
+                            status={devis.status.toLowerCase() as Status}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-2 px-6 py-4 text-sm">
-                      <div>
-                        <p className="font-semibold">{devis.customer}</p>
-                        <p className="font-semibold text-black/70">
-                          #{devis.id}
-                        </p>
-                      </div>
-                      <div className="text-[13px]">
-                        <p className="font-light text-gray-500">
-                          Dernière mise à jour{" "}
-                          {formatDistanceToNow(new Date(devis.updatedAt), {
-                            addSuffix: true,
-                            locale: fr,
-                          })}
-                        </p>
-                        <p className="font-light text-black">
-                          Créé par {devis.author.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          {devis.items.length} item
-                          {devis.items.length > 1 ? "s" : ""}{" "}
-                          <span className="text-gray-500">|</span>{" "}
-                          {devis.items
-                            .reduce(
-                              (acc, item) => acc + item.price * item.quantity,
-                              0
-                            )
-                            .toFixed(2)}
-                          €
-                        </p>
-                      </div>
-                      <div className="mt-4">
-                        <StatusBadge
-                          status={devis.status.toLowerCase() as Status}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            )}
+                  </Link>
+                ))}
           </div>
           <hr />
           <h1
@@ -199,66 +208,70 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
             Devis refusés
           </h1>
           <div className="flex flex-row flex-wrap gap-8">
-            {areRefusedDevisLoading || !refusedDevis ? (
-              <div>Loading...</div>
-            ) : (
-              refusedDevis.map((devis) => (
-                <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
-                  <div
+            {areRefusedDevisLoading || !refusedDevis
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <LoadingState key={Number("3" + String(i))} />
+                ))
+              : refusedDevis.map((devis) => (
+                  <Link
+                    href={`/devis/client/${devis.id}`}
                     key={devis.id}
-                    className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
+                    passHref
                   >
                     <div
-                      className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
-                      style={{
-                        backgroundColor: devis.color,
-                      }}
+                      key={devis.id}
+                      className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
                     >
-                      {devis.customer}
+                      <div
+                        className={`flex h-[164px] w-full items-center justify-center rounded-t-xl text-white`}
+                        style={{
+                          backgroundColor: devis.color,
+                        }}
+                      >
+                        {devis.customer}
+                      </div>
+                      <div className="flex flex-col gap-2 px-6 py-4 text-sm">
+                        <div>
+                          <p className="font-semibold">{devis.customer}</p>
+                          <p className="font-semibold text-black/70">
+                            #{devis.id}
+                          </p>
+                        </div>
+                        <div className="text-[13px]">
+                          <p className="font-light text-gray-500">
+                            Dernière mise à jour{" "}
+                            {formatDistanceToNow(new Date(devis.updatedAt), {
+                              addSuffix: true,
+                              locale: fr,
+                            })}
+                          </p>
+                          <p className="font-light text-black">
+                            Créé par {devis.author.name}
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            {devis.items.length} item
+                            {devis.items.length > 1 ? "s" : ""}{" "}
+                            <span className="text-gray-500">|</span>{" "}
+                            {devis.items
+                              .reduce(
+                                (acc, item) => acc + item.price * item.quantity,
+                                0
+                              )
+                              .toFixed(2)}
+                            €
+                          </p>
+                        </div>
+                        <div className="mt-4">
+                          <StatusBadge
+                            status={devis.status.toLowerCase() as Status}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-2 px-6 py-4 text-sm">
-                      <div>
-                        <p className="font-semibold">{devis.customer}</p>
-                        <p className="font-semibold text-black/70">
-                          #{devis.id}
-                        </p>
-                      </div>
-                      <div className="text-[13px]">
-                        <p className="font-light text-gray-500">
-                          Dernière mise à jour{" "}
-                          {formatDistanceToNow(new Date(devis.updatedAt), {
-                            addSuffix: true,
-                            locale: fr,
-                          })}
-                        </p>
-                        <p className="font-light text-black">
-                          Créé par {devis.author.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          {devis.items.length} item
-                          {devis.items.length > 1 ? "s" : ""}{" "}
-                          <span className="text-gray-500">|</span>{" "}
-                          {devis.items
-                            .reduce(
-                              (acc, item) => acc + item.price * item.quantity,
-                              0
-                            )
-                            .toFixed(2)}
-                          €
-                        </p>
-                      </div>
-                      <div className="mt-4">
-                        <StatusBadge
-                          status={devis.status.toLowerCase() as Status}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            )}
+                  </Link>
+                ))}
           </div>
         </div>
       </main>
