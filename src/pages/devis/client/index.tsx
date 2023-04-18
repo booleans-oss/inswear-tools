@@ -11,7 +11,7 @@ const DevisClientPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>INS&apos;WEAR</title>
+        <title>Ins&apos;wear - Devis Client</title>
         <meta name="description" content="Outils pour l'association INS'WEAR" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

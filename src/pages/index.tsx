@@ -41,7 +41,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
   return (
     <>
       <Head>
-        <title>INS&apos;WEAR</title>
+        <title>Accueil</title>
         <meta name="description" content="Outils pour l'association INS'WEAR" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
