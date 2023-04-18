@@ -33,6 +33,7 @@ model FournisseurDevis {
     createdAt DateTime          @default(now())
     updatedAt DateTime          @updatedAt
     author    User              @relation(fields: [authorId], references: [id])
+    customer  String
     authorId  String
     color     String
     items     FournisseurItem[]

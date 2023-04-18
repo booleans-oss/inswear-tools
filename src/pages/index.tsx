@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { FC } from "react";
 import { FaPlus } from "react-icons/fa";
 import { fr } from "date-fns/locale";
-import type { Status } from "@/utils/types";
+import type { ClientStatus } from "@/utils/types";
 import { capitalize } from "@/utils/utils";
 import Head from "next/head";
 import LoadingState from "@/components/primitives/LoadingState";
@@ -14,8 +14,8 @@ type MainViewProps = {
   createDevis: () => void;
 };
 
-const StatusBadge = ({ status }: { status: Status }) => {
-  const color: Record<Lowercase<Status>, string> = {
+const StatusBadge = ({ status }: { status: ClientStatus }) => {
+  const color: Record<Lowercase<ClientStatus>, string> = {
     généré: "bg-blue-100 text-blue-500 border-blue-500",
     envoyé: "bg-yellow-100 text-yellow-500 border-yellow-500",
     accepté: "bg-green-100 text-green-500 border-green-500",
@@ -121,7 +121,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                         </div>
                         <div className="mt-4">
                           <StatusBadge
-                            status={devis.status.toLowerCase() as Status}
+                            status={devis.status.toLowerCase() as ClientStatus}
                           />
                         </div>
                       </div>
@@ -193,7 +193,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                         </div>
                         <div className="mt-4">
                           <StatusBadge
-                            status={devis.status.toLowerCase() as Status}
+                            status={devis.status.toLowerCase() as ClientStatus}
                           />
                         </div>
                       </div>
@@ -265,7 +265,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                         </div>
                         <div className="mt-4">
                           <StatusBadge
-                            status={devis.status.toLowerCase() as Status}
+                            status={devis.status.toLowerCase() as ClientStatus}
                           />
                         </div>
                       </div>

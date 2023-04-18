@@ -20,9 +20,6 @@ export const fournisseurDevisRouter = createTRPCRouter({
           {
             status: "généré",
           },
-          {
-            status: "envoyé",
-          },
         ],
       },
       include: {
@@ -31,10 +28,10 @@ export const fournisseurDevisRouter = createTRPCRouter({
       },
     });
   }),
-  getValidatedOnes: publicProcedure.query(({ ctx }) => {
+  getSentOnes: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.fournisseurDevis.findMany({
       where: {
-        status: "accepté",
+        status: "envoyé",
       },
       include: {
         author: true,
@@ -42,10 +39,10 @@ export const fournisseurDevisRouter = createTRPCRouter({
       },
     });
   }),
-  getRefusedOnes: publicProcedure.query(({ ctx }) => {
+  getAnsweredOnes: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.fournisseurDevis.findMany({
       where: {
-        status: "refusé",
+        status: "répondu",
       },
       include: {
         author: true,
@@ -86,6 +83,7 @@ export const fournisseurDevisRouter = createTRPCRouter({
         data: {
           id: faker.random.numeric(5),
           status: "généré",
+          customer: input.customer,
           color: faker.color.rgb({ format: "hex" }),
           items: {
             create: input.items.map((item) => ({

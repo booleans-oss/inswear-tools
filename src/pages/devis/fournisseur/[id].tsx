@@ -4,7 +4,7 @@ import type {
   Customization,
   FournisseurItem,
   Size,
-  Status,
+  FournisseurStatus,
 } from "@/utils/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ import MailVisualizer from "@/components/fournisseur/MailVisualizer";
 const DevisView: FC = () => {
   const router = useRouter();
 
-  const { mutateAsync } = api.clientDevis.updateStatus.useMutation();
+  const { mutateAsync } = api.fournisseurDevis.updateStatus.useMutation();
 
   const { id } = router.query;
 
@@ -22,11 +22,11 @@ const DevisView: FC = () => {
     id: id as string,
   });
 
-  const [status, setStatus] = useState<Status>(
-    (data?.status as Status) ?? "généré"
+  const [status, setStatus] = useState<FournisseurStatus>(
+    (data?.status as FournisseurStatus) ?? "généré"
   );
 
-  const onStatusChange = async (newStatus: Status) => {
+  const onStatusChange = async (newStatus: FournisseurStatus) => {
     try {
       await mutateAsync({ id: id as string, status: newStatus });
     } catch (error) {
@@ -43,7 +43,7 @@ const DevisView: FC = () => {
   }));
 
   useEffect(() => {
-    setStatus((data?.status as Status) ?? "généré");
+    setStatus((data?.status as FournisseurStatus) ?? "généré");
   }, [data]);
 
   return (
@@ -74,12 +74,14 @@ const DevisView: FC = () => {
                   /
                 </span>
               </li>
-              <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
-                Fournisseur
-                <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
-                  /
-                </span>
-              </li>
+              <Link href="/devis/fournisseur" passHref>
+                <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
+                  Fournisseur
+                  <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
+                    /
+                  </span>
+                </li>
+              </Link>
               <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-black antialiased transition-colors duration-300 hover:text-gray-500">
                 #{id}
               </li>
@@ -95,10 +97,10 @@ const DevisView: FC = () => {
             <div className="flex justify-between">
               <div className="w-[200px]">
                 <ListBox
-                  items={["Généré", "Envoyé", "Accepté", "Refusé"]}
+                  items={["Généré", "Envoyé", "Repondu"]}
                   value={status}
                   onChange={(value) => {
-                    onStatusChange(value as Status).catch((error) =>
+                    onStatusChange(value as FournisseurStatus).catch((error) =>
                       console.error(error)
                     );
                   }}
@@ -107,7 +109,10 @@ const DevisView: FC = () => {
               <h1 className="text-center text-3xl font-bold uppercase">
                 Devis #{id}
               </h1>
-              <a href="mailto:contact@inswear.fr" className="rounded border bg-black px-4 py-2 text-sm font-bold uppercase text-white duration-150 ease-in-out hover:border-black hover:bg-white hover:text-black">
+              <a
+                href="mailto:contact@inswear.fr"
+                className="rounded border bg-black px-4 py-2 text-sm font-bold uppercase text-white duration-150 ease-in-out hover:border-black hover:bg-white hover:text-black"
+              >
                 Envoyer
               </a>
             </div>

@@ -1,6 +1,8 @@
 export type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
 
-export type Status = "généré" | "envoyé" | "accepté" | "refusé";
+export type ClientStatus = "généré" | "envoyé" | "accepté" | "refusé";
+
+export type FournisseurStatus = "généré" | "envoyé" | "répondu";
 
 export type Item = {
   url: string;

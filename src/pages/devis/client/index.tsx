@@ -1,12 +1,12 @@
 import CreateView from "@/components/client/CreateView";
-import MainView from "@/components/MainView";
+import MainView from "@/components/client/MainView";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 
 const DevisClientPage: NextPage = () => {
-  const [pageStatus, setPageStatus] = useState<"main" | "create" | "view">(
-    "create"
+  const [pageStatus, setPageStatus] = useState<"main" | "create">(
+    "main"
   );
   return (
     <>

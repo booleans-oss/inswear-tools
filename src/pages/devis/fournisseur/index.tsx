@@ -2,11 +2,11 @@ import CreateView from "@/components/fournisseur/CreateView";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import MainView from "..";
+import MainView from "@/components/fournisseur/MainView";
 
 const DevisFournisseurPage: NextPage = () => {
   const [pageStatus, setPageStatus] = useState<"main" | "create" | "view">(
-    "create"
+    "main"
   );
   return (
     <>

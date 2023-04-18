@@ -5,16 +5,16 @@ import Link from "next/link";
 import type { FC } from "react";
 import { FaPlus } from "react-icons/fa";
 import { fr } from "date-fns/locale";
-import type { Status } from "@/utils/types";
+import type { ClientStatus } from "@/utils/types";
 import { capitalize } from "@/utils/utils";
-import LoadingState from "./primitives/LoadingState";
+import LoadingState from "../primitives/LoadingState";
 
 type MainViewProps = {
   createDevis: () => void;
 };
 
-const StatusBadge = ({ status }: { status: Status }) => {
-  const color: Record<Lowercase<Status>, string> = {
+const StatusBadge = ({ status }: { status: ClientStatus }) => {
+  const color: Record<Lowercase<ClientStatus>, string> = {
     généré: "bg-blue-100 text-blue-500 border-blue-500",
     envoyé: "bg-yellow-100 text-yellow-500 border-yellow-500",
     accepté: "bg-green-100 text-green-500 border-green-500",
@@ -43,23 +43,21 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
         Devis actifs
       </h1>
       <div className="flex flex-row flex-wrap gap-8">
-        <Link href="/devis/client" passHref>
-          <div
-            className="flex h-[364px] w-[292px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-gray-300 bg-transparent"
-            onClick={createDevis}
-          >
-            <div className="rounded-full border-2 border-gray-200 p-2">
-              <FaPlus />
-            </div>
-            <div className="text-md font-bold">Créer un devis</div>
+        <div
+          className="flex h-[364px] w-[292px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-gray-300 bg-transparent"
+          onClick={createDevis}
+        >
+          <div className="rounded-full border-2 border-gray-200 p-2">
+            <FaPlus />
           </div>
-        </Link>
+          <div className="text-md font-bold">Créer un devis</div>
+        </div>
         {areActiveDevisLoading || !activeDevis
           ? Array.from({ length: 3 }).map((_, i) => (
               <LoadingState key={Number("1" + String(i))} />
             ))
           : activeDevis.map((devis) => (
-              <Link href={`/devis/${devis.id}`} key={devis.id} passHref>
+              <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
                 <div
                   key={devis.id}
                   className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
@@ -105,7 +103,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                     </div>
                     <div className="mt-4">
                       <StatusBadge
-                        status={devis.status.toLowerCase() as Status}
+                        status={devis.status.toLowerCase() as ClientStatus}
                       />
                     </div>
                   </div>
@@ -122,7 +120,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
           <div>Loading...</div>
         ) : (
           validatedDevis.map((devis) => (
-            <Link href={`/devis/${devis.id}`} key={devis.id} passHref>
+            <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
               <div
                 key={devis.id}
                 className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
@@ -168,7 +166,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                   </div>
                   <div className="mt-4">
                     <StatusBadge
-                      status={devis.status.toLowerCase() as Status}
+                      status={devis.status.toLowerCase() as ClientStatus}
                     />
                   </div>
                 </div>
@@ -186,7 +184,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
           <div>Loading...</div>
         ) : (
           refusedDevis.map((devis) => (
-            <Link href={`/devis/${devis.id}`} key={devis.id} passHref>
+            <Link href={`/devis/client/${devis.id}`} key={devis.id} passHref>
               <div
                 key={devis.id}
                 className="flex h-[364px] w-[292px] flex-col rounded-xl border border-gray-300 bg-transparent"
@@ -232,7 +230,7 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                   </div>
                   <div className="mt-4">
                     <StatusBadge
-                      status={devis.status.toLowerCase() as Status}
+                      status={devis.status.toLowerCase() as ClientStatus}
                     />
                   </div>
                 </div>

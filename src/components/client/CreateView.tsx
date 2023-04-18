@@ -47,7 +47,7 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
                 /
               </span>
             </li>
-            <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black">
+            <li className="flex cursor-pointer items-center font-sans text-sm font-normal leading-normal text-gray-900/60 antialiased transition-colors duration-300 hover:text-black" onClick={closeView}>
               Client
               <span className="text-blue-gray-500 pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased">
                 /

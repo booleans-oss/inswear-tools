@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/utils/api";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
+import TextInput from "../form/TextInput";
 
 type CreateFormProps = {
   items: FournisseurItem[];
@@ -22,7 +23,7 @@ const CreateForm: FC<CreateFormProps> = ({
 }) => {
   const router = useRouter();
   const { user } = useUser();
-  const { handleSubmit, setValue } = useForm<Devis>({
+  const { handleSubmit, setValue, register } = useForm<Devis>({
     mode: "onChange",
     resolver: zodResolver(DevisSchema),
     defaultValues: {
@@ -61,6 +62,11 @@ const CreateForm: FC<CreateFormProps> = ({
         handleSubmit(onSubmit)(e).catch((e) => console.log(e));
       }}
     >
+      <TextInput
+        label="Client"
+        placeholder="INS'WEAR"
+        {...register("customer")}
+      />
       <ItemsInput
         margin={0}
         items={items}
