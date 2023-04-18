@@ -30,7 +30,7 @@ const CreateForm: FC<CreateFormProps> = ({
     },
   });
 
-  const { mutateAsync } = api.fournisseurDevis.create.useMutation();
+  const { mutateAsync, isLoading } = api.fournisseurDevis.create.useMutation();
 
   useEffect(() => {
     if (items) {
@@ -72,7 +72,33 @@ const CreateForm: FC<CreateFormProps> = ({
         className="float-right mt-10 w-fit rounded-md border border-gray-200 bg-black px-6 py-2 text-sm font-semibold text-white hover:border-gray-700 hover:bg-gray-700"
         form="devis-create-form"
       >
-        Créer le mail
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <svg
+              className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              />
+            </svg>
+            Création du mail...
+          </div>
+        ) : (
+          "Créer le devis"
+        )}
       </button>
     </form>
   );
