@@ -1,9 +1,8 @@
 import { z } from "zod";
 
+import { DevisSchema } from "@/schemas/Devis";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { faker } from "@faker-js/faker";
-import { DevisSchema } from "@/schemas/Devis";
-import { UserSchema } from "@/schemas/User";
 
 export const clientDevisRouter = createTRPCRouter({
   hello: publicProcedure
@@ -26,7 +25,6 @@ export const clientDevisRouter = createTRPCRouter({
         ],
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -37,7 +35,6 @@ export const clientDevisRouter = createTRPCRouter({
         status: "accepté",
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -48,7 +45,6 @@ export const clientDevisRouter = createTRPCRouter({
         status: "refusé",
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -62,26 +58,12 @@ export const clientDevisRouter = createTRPCRouter({
         },
         include: {
           items: true,
-          author: true,
         },
       });
     }),
   create: publicProcedure
-    .input(DevisSchema.merge(UserSchema))
+    .input(DevisSchema)
     .mutation(async ({ ctx, input }) => {
-      let user = await ctx.prisma.user.findUnique({
-        where: {
-          email: input.email,
-        },
-      });
-      if (!user) {
-        user = await ctx.prisma.user.create({
-          data: {
-            email: input.email,
-            name: input.name,
-          },
-        });
-      }
       return ctx.prisma.clientDevis.create({
         data: {
           id: faker.random.numeric(5),
@@ -106,11 +88,6 @@ export const clientDevisRouter = createTRPCRouter({
               supplierPrice: parseFloat(item.supplierPrice),
               customization: JSON.stringify(item.customizations),
             })),
-          },
-          author: {
-            connect: {
-              email: input.email,
-            },
           },
         },
       });

@@ -15,16 +15,8 @@
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import type {
-  SignedInAuthObject,
-  SignedOutAuthObject,
-} from "@clerk/nextjs/dist/api";
 
 import { prisma } from "@/server/db";
-
-interface AuthContext {
-  auth: SignedInAuthObject | SignedOutAuthObject;
-}
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -36,10 +28,9 @@ interface AuthContext {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (_opts: AuthContext) => {
+const createInnerTRPCContext = () => {
   return {
     prisma,
-    auth: _opts.auth,
   };
 };
 
@@ -50,7 +41,7 @@ const createInnerTRPCContext = (_opts: AuthContext) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({ auth: getAuth(_opts.req) });
+  return createInnerTRPCContext();
 };
 
 /**
@@ -63,7 +54,6 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { getAuth } from "@clerk/nextjs/server";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

@@ -1,14 +1,13 @@
-import { inter } from "@/utils/fonts";
-import { type FC, type SetStateAction, type Dispatch, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import ItemsInput from "./ItemsInput";
-import type { FournisseurItem } from "@/utils/types";
-import { type Devis, DevisSchema } from "@/schemas/FournisseurDevis";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { DevisSchema, type Devis } from "@/schemas/FournisseurDevis";
 import { api } from "@/utils/api";
-import { useUser } from "@clerk/nextjs";
+import { inter } from "@/utils/fonts";
+import type { FournisseurItem } from "@/utils/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useEffect, type Dispatch, type FC, type SetStateAction } from "react";
+import { useForm } from "react-hook-form";
 import TextInput from "../form/TextInput";
+import ItemsInput from "./ItemsInput";
 
 type CreateFormProps = {
   items: FournisseurItem[];
@@ -22,7 +21,6 @@ const CreateForm: FC<CreateFormProps> = ({
   triggerRender,
 }) => {
   const router = useRouter();
-  const { user } = useUser();
   const { handleSubmit, setValue, register } = useForm<Devis>({
     mode: "onChange",
     resolver: zodResolver(DevisSchema),
@@ -40,13 +38,8 @@ const CreateForm: FC<CreateFormProps> = ({
   }, [items, setValue]);
 
   const onSubmit = async (data: Devis) => {
-    if (!user) return console.log("No user");
     try {
-      const devis = await mutateAsync({
-        ...data,
-        email: user.primaryEmailAddress?.emailAddress ?? "",
-        name: user.fullName ?? "",
-      });
+      const devis = await mutateAsync(data);
       await router.push(`/devis/fournisseur/${devis.id}`);
     } catch (e) {
       console.log(e);

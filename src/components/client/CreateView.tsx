@@ -1,17 +1,15 @@
 import { inter } from "@/utils/fonts";
-import { type FC, useState } from "react";
-import PDFVisualizer from "./PDFVisualizer";
-import CreateForm from "./CreateForm";
 import type { Item } from "@/utils/types";
-import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { useState, type FC } from "react";
+import CreateForm from "./CreateForm";
+import PDFVisualizer from "./PDFVisualizer";
 
 type CreateViewProps = {
   closeView: () => void;
 };
 
 const CreateView: FC<CreateViewProps> = ({ closeView }) => {
-  const { user } = useUser();
   const [, setTriggerRender] = useState<boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
   const [customer, setCustomer] = useState<string>("");
@@ -76,7 +74,6 @@ const CreateView: FC<CreateViewProps> = ({ closeView }) => {
         <div className="-mt-20 flex h-full w-full flex-col bg-blue-500">
           <PDFVisualizer
             items={items}
-            author={user?.fullName}
             customer={customer}
           />
         </div>

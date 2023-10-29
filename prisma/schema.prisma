@@ -15,8 +15,6 @@ model ClientDevis {
     id        String       @id @unique
     createdAt DateTime     @default(now())
     updatedAt DateTime     @updatedAt
-    author    User         @relation(fields: [authorId], references: [id])
-    authorId  String
     color     String
     items     ClientItem[]
     price     Float
@@ -25,29 +23,16 @@ model ClientDevis {
     status    String
     margin    Float
 
-    @@index([authorId], name: "authorId")
 }
 
 model FournisseurDevis {
     id        String            @id @unique
     createdAt DateTime          @default(now())
     updatedAt DateTime          @updatedAt
-    author    User              @relation(fields: [authorId], references: [id])
     customer  String
-    authorId  String
     color     String
     items     FournisseurItem[]
     status    String
-
-    @@index([authorId], name: "authorId")
-}
-
-model User {
-    id               String             @id @default(cuid())
-    email            String             @unique
-    name             String?
-    clientDevis      ClientDevis[]
-    fournisseurDevis FournisseurDevis[]
 }
 
 model ClientItem {

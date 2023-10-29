@@ -1,12 +1,12 @@
-import ListBox from "@/components/primitives/ListBox";
 import PDFVisualizer, { PDFDocument } from "@/components/client/PDFVisualizer";
+import ListBox from "@/components/primitives/ListBox";
 import { api } from "@/utils/api";
-import type { Customization, Item, Size, ClientStatus } from "@/utils/types";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { type FC, useState, useEffect } from "react";
+import type { ClientStatus, Customization, Item, Size } from "@/utils/types";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState, type FC } from "react";
 
 const DevisView: FC = () => {
   const router = useRouter();
@@ -120,7 +120,6 @@ const DevisView: FC = () => {
                   document={
                     <PDFDocument
                       items={items ?? []}
-                      author={data.author.name}
                       id={data.id}
                       customer={data.customer}
                     />
@@ -140,7 +139,6 @@ const DevisView: FC = () => {
               </div>
               <PDFVisualizer
                 items={items ?? []}
-                author={data.author.name}
                 id={data.id}
                 customer={data.customer}
                 createdAt={data.createdAt}

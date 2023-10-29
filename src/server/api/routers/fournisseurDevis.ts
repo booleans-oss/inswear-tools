@@ -1,9 +1,8 @@
 import { z } from "zod";
 
+import { DevisSchema } from "@/schemas/FournisseurDevis";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { faker } from "@faker-js/faker";
-import { DevisSchema } from "@/schemas/FournisseurDevis";
-import { UserSchema } from "@/schemas/User";
 
 export const fournisseurDevisRouter = createTRPCRouter({
   hello: publicProcedure
@@ -23,7 +22,6 @@ export const fournisseurDevisRouter = createTRPCRouter({
         ],
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -34,7 +32,6 @@ export const fournisseurDevisRouter = createTRPCRouter({
         status: "envoyé",
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -45,7 +42,6 @@ export const fournisseurDevisRouter = createTRPCRouter({
         status: "répondu",
       },
       include: {
-        author: true,
         items: true,
       },
     });
@@ -59,26 +55,12 @@ export const fournisseurDevisRouter = createTRPCRouter({
         },
         include: {
           items: true,
-          author: true,
         },
       });
     }),
   create: publicProcedure
-    .input(DevisSchema.merge(UserSchema))
+    .input(DevisSchema)
     .mutation(async ({ ctx, input }) => {
-      let user = await ctx.prisma.user.findUnique({
-        where: {
-          email: input.email,
-        },
-      });
-      if (!user) {
-        user = await ctx.prisma.user.create({
-          data: {
-            email: input.email,
-            name: input.name,
-          },
-        });
-      }
       return ctx.prisma.fournisseurDevis.create({
         data: {
           id: faker.random.numeric(5),
@@ -95,11 +77,6 @@ export const fournisseurDevisRouter = createTRPCRouter({
               quantity: item.quantity,
               customization: JSON.stringify(item.customizations),
             })),
-          },
-          author: {
-            connect: {
-              email: input.email,
-            },
           },
         },
       });

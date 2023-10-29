@@ -1,16 +1,13 @@
-import { Fragment, type FC } from "react";
-import Image from "next/image";
 import { poppins } from "@/utils/fonts";
-import { UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
-import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { BsBoxSeam, BsCurrencyDollar } from "react-icons/bs";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment, type FC } from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
+import { BsBoxSeam, BsChevronDown, BsChevronUp, BsCurrencyDollar } from "react-icons/bs";
 import { MdComputer } from "react-icons/md";
 
 const Navbar: FC = () => {
-  const { user, isLoaded } = useUser();
   return (
     <nav className="flex h-20 w-screen flex-row items-center justify-between border-b border-gray-300 bg-white/10 px-40 text-black">
       <div className="flex flex-row gap-20">
@@ -113,7 +110,6 @@ const Navbar: FC = () => {
         </div>
       </div>
 
-      {isLoaded && user && <UserButton />}
     </nav>
   );
 };

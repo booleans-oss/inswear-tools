@@ -1,14 +1,14 @@
+import LoadingState from "@/components/primitives/LoadingState";
 import { api } from "@/utils/api";
 import { inter } from "@/utils/fonts";
+import type { ClientStatus } from "@/utils/types";
+import { capitalize } from "@/utils/utils";
 import { formatDistanceToNow } from "date-fns";
+import { fr } from "date-fns/locale";
+import Head from "next/head";
 import Link from "next/link";
 import type { FC } from "react";
 import { FaPlus } from "react-icons/fa";
-import { fr } from "date-fns/locale";
-import type { ClientStatus } from "@/utils/types";
-import { capitalize } from "@/utils/utils";
-import Head from "next/head";
-import LoadingState from "@/components/primitives/LoadingState";
 
 type MainViewProps = {
   createDevis: () => void;
@@ -101,9 +101,6 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                               locale: fr,
                             })}
                           </p>
-                          <p className="font-light text-black">
-                            Créé par {devis.author.name}
-                          </p>
                         </div>
                         <div>
                           <p>
@@ -173,9 +170,6 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                               locale: fr,
                             })}
                           </p>
-                          <p className="font-light text-black">
-                            Créé par {devis.author.name}
-                          </p>
                         </div>
                         <div>
                           <p>
@@ -244,9 +238,6 @@ const MainView: FC<MainViewProps> = ({ createDevis }) => {
                               addSuffix: true,
                               locale: fr,
                             })}
-                          </p>
-                          <p className="font-light text-black">
-                            Créé par {devis.author.name}
                           </p>
                         </div>
                         <div>
